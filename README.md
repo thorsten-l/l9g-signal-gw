@@ -1,2 +1,2 @@
 # l9g-signal-gw
-IoT Signal Messanger Gateway
+IoT Signal Messenger Gateway
