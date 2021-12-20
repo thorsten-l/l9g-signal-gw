@@ -77,11 +77,15 @@ public class L9gSignalGwApplication
       + "\nwebappServerPort={}"
       + "\napiToken={}"
       + "\ndefaultSignalAccount={}"
+      + "\ndefaultSignalReceipient={}"
+      + "\ndefaultSignalReceipientIsGroup={}"
       + "\n",
       config.getWebappContextPath(),
       config.getWebappServerPort(),
       config.getApiToken(),
-      config.getDefaultSignalAccount()
+      config.getDefaultSignalAccount(),
+      config.getDefaultSignalReceipient(),
+      config.isDefaultSignalReceipientIsGroup()
     );
 
     LOGGER.debug("*** Start Application ***");
