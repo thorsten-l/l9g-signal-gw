@@ -106,7 +106,7 @@ public class Config
         LOGGER.info("Writing config file");
         config = new Config();
 
-        config.signalId = PasswordGenerator.generate(32);
+        config.defaultSignalAccount = PasswordGenerator.generate(32);
         config.apiToken = PasswordGenerator.generate(32);
         config.webappContextPath = "";
         config.webappServerPort = 8080;
@@ -155,5 +155,5 @@ public class Config
   @Getter
   @JsonSerialize(using = PasswordSerializer.class)
   @JsonDeserialize(using = PasswordDeserializer.class)
-  private String signalId;
+  private String defaultSignalAccount;
 }

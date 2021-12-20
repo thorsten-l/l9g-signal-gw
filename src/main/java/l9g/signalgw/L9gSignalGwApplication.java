@@ -76,12 +76,12 @@ public class L9gSignalGwApplication
     LOGGER.trace("\n\nwebappContextPath={}"
       + "\nwebappServerPort={}"
       + "\napiToken={}"
-      + "\nsignalId={}"
+      + "\ndefaultSignalAccount={}"
       + "\n",
       config.getWebappContextPath(),
       config.getWebappServerPort(),
       config.getApiToken(),
-      config.getSignalId()
+      config.getDefaultSignalAccount()
     );
 
     LOGGER.debug("*** Start Application ***");
