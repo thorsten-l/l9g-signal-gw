@@ -106,7 +106,9 @@ public class Config
         LOGGER.info("Writing config file");
         config = new Config();
 
-        config.defaultSignalAccount = PasswordGenerator.generate(32);
+        config.defaultSignalAccount = "<phone number>";
+        config.defaultSignalReceipient = "<phone number | group id>";
+        config.defaultSignalReceipientIsGroup = true;
         config.apiToken = PasswordGenerator.generate(32);
         config.webappContextPath = "";
         config.webappServerPort = 8080;
@@ -153,7 +155,11 @@ public class Config
   private String apiToken;
 
   @Getter
-  @JsonSerialize(using = PasswordSerializer.class)
-  @JsonDeserialize(using = PasswordDeserializer.class)
   private String defaultSignalAccount;
+
+  @Getter
+  private String defaultSignalReceipient;
+
+  @Getter
+  private boolean defaultSignalReceipientIsGroup;
 }
