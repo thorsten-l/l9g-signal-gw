@@ -1,0 +1,9 @@
+    
+body { margin-top: 2em }
+    
+#buildinfo { 
+  font-size: 70%; 
+  position: absolute;
+  bottom: 2em;
+}
+    
