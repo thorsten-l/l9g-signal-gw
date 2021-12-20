@@ -55,9 +55,10 @@ build/
 ### VS Code ###
 .vscode/
 
-# private directories
+# private directories and files
 data/
 private/
+secret.bin
 
 # config files
 /config.json
