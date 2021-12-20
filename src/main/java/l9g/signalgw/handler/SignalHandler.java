@@ -33,7 +33,7 @@ public class SignalHandler implements Runnable
     return SINGLETON;
   }
 
-  public void sendMessage(String message)
+  public void sendMessage(SignalMessage message)
   {
     sendingQueue.add(message);
   }
@@ -45,10 +45,10 @@ public class SignalHandler implements Runnable
     {
       try
       {
-        String message = sendingQueue.poll();
+        SignalMessage message = sendingQueue.poll();
         if ( message != null )
         {
-          LOGGER.debug(message);
+          LOGGER.debug(message.toString());
         }
         Thread.sleep(100);
       }
@@ -61,5 +61,5 @@ public class SignalHandler implements Runnable
 
   private final Thread handlerThread;
 
-  private final Queue<String> sendingQueue = new LinkedBlockingQueue<>();
+  private final Queue<SignalMessage> sendingQueue = new LinkedBlockingQueue<>();
 }
