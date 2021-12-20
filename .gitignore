@@ -63,3 +63,9 @@ private/
 /config.json
 /config.properties
 /config.xml
+
+# tomcat logs
+/tomcat
+
+# jrebel
+rebel.xml
