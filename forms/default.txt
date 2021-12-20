@@ -1,0 +1,4 @@
+Date: %timestamp%
+Client: %clientname%
+--------------------
+%message%
