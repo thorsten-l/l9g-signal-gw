@@ -2,6 +2,8 @@ package l9g.signalgw;
 
 import l9g.signalgw.crypto.AES256;
 import l9g.signalgw.crypto.PasswordGenerator;
+import l9g.signalgw.handler.SignalHandler;
+import l9g.signalgw.handler.SignalMessage;
 import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
 import org.slf4j.Logger;
@@ -87,6 +89,10 @@ public class L9gSignalGwApplication
       config.getDefaultSignalReceipient(),
       config.isDefaultSignalReceipientIsGroup()
     );
+
+    SignalHandler.getInstance().sendMessage(new SignalMessage(config.
+      getDefaultSignalReceipient(), config.isDefaultSignalReceipientIsGroup(),
+      "L9G IoT Signal Gateway started."));
 
     LOGGER.debug("*** Start Application ***");
 

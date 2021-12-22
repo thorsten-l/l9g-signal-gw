@@ -112,6 +112,8 @@ public class Config
         config.apiToken = PasswordGenerator.generate(32);
         config.webappContextPath = "";
         config.webappServerPort = 8080;
+        config.signalCliHost = "localhost";
+        config.signalCliPort = 7583;
 
         objectMapper.writerWithDefaultPrettyPrinter()
           .writeValue(configFile, config);
@@ -148,6 +150,12 @@ public class Config
 
   @Getter
   private int webappServerPort;
+
+  @Getter
+  private String signalCliHost;
+
+  @Getter
+  private int signalCliPort;
 
   @Getter
   @JsonSerialize(using = PasswordSerializer.class)
