@@ -1,4 +1,4 @@
-Date: %timestamp%
-Client: %clientname%
+Date: ${timestamp}
+Client: ${clientname}
 --------------------
-%message%
+${message}
