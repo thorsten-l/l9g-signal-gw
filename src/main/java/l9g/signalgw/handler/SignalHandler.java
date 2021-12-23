@@ -5,6 +5,7 @@ import java.io.StringWriter;
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 import l9g.signalgw.Config;
+import l9g.signalgw.cli.SignalCliConnection;
 import l9g.signalgw.cli.SignalCliMethod;
 import l9g.signalgw.cli.SignalCliRequest;
 import l9g.signalgw.cli.SignalCliRequestParams;
@@ -82,6 +83,7 @@ public class SignalHandler implements Runnable
             StringWriter writer = new StringWriter();
             objectMapper.writeValue(writer, request);
             LOGGER.debug("\n\nrequest={}\n", writer.toString());
+            SignalCliConnection.send(writer.toString());
           }
           else
           {

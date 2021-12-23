@@ -1,5 +1,6 @@
 package l9g.signalgw;
 
+import l9g.signalgw.cli.SignalCliConnection;
 import l9g.signalgw.crypto.AES256;
 import l9g.signalgw.crypto.PasswordGenerator;
 import l9g.signalgw.handler.SignalHandler;
@@ -90,6 +91,7 @@ public class L9gSignalGwApplication
       config.isDefaultSignalReceipientIsGroup()
     );
 
+    SignalCliConnection.start();
     SignalHandler.getInstance().sendMessage(new SignalMessage(config.
       getDefaultSignalReceipient(), config.isDefaultSignalReceipientIsGroup(),
       "L9G IoT Signal Gateway started."));
