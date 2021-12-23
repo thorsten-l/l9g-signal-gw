@@ -1,4 +1,9 @@
 Date: ${timestamp}
 Client: ${clientname}
+
+test 1 ${huhu 
+test 2 {a}
+test 3 $ { b }
+
 --------------------
 ${message}

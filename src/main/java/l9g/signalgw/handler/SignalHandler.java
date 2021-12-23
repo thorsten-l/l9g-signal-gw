@@ -65,8 +65,7 @@ public class SignalHandler implements Runnable
             SignalCliRequestParams params = new SignalCliRequestParams(config.
               getDefaultSignalAccount());
 
-            // TODO: Message fill form
-            params.setMessage(message.getMessage());
+            params.setMessage(SignalFormParser.parse(message));
 
             if (message.isReceipientIsGroup())
             {

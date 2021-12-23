@@ -59,8 +59,10 @@ public class SignalCliConnection implements Runnable
         String line;
         while ((line = signalIn.readLine()) != null)
         {
+          LOGGER.trace( "received={}", line );
           SignalCliResponse response = objectMapper.readValue(line, SignalCliResponse.class);
           LOGGER.debug( "response={}", response.toString() );
+          // TODO: do some fancy stuff with the response object
         }
 
         signalOut.close();
