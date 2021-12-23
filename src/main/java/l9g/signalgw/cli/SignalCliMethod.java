@@ -9,5 +9,6 @@ public enum SignalCliMethod
   send,
   link,
   listGroups,
-  listIdentities
+  listIdentitie,
+  receive
 }

@@ -1,7 +1,9 @@
 package l9g.signalgw.cli;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import l9g.signalgw.Config;
@@ -16,9 +18,9 @@ public class SignalCliConnection implements Runnable
 {
   private final static Logger LOGGER = LoggerFactory.getLogger(
     SignalCliConnection.class.getName());
-  
+
   private final static SignalCliConnection SINGLETON = new SignalCliConnection();
-  
+
   private final static Config CONFIG = Config.getInstance();
   
   private SignalCliConnection()
@@ -26,22 +28,22 @@ public class SignalCliConnection implements Runnable
     this.monitor = new Thread(this, "SignalCliConnectionMonitor");
     this.monitor.setDaemon(true);
   }
-  
+
   public static void start()
   {
     SINGLETON.monitor.start();
   }
-  
-  public static void send( String jsonRpcMessage )
+
+  public static void send(String jsonRpcMessage)
   {
     SINGLETON.synchronizedSend(jsonRpcMessage);
   }
-      
+
   @Override
   public void run()
   {
     LOGGER.debug("start signal-cli connection monitor");
-    
+
     while (true)
     {
       LOGGER.debug("connect to signal-cli jsonrpc service");
@@ -49,16 +51,18 @@ public class SignalCliConnection implements Runnable
       {
         socket = new Socket(CONFIG.getSignalCliHost(), CONFIG.getSignalCliPort());
         signalOut = new PrintWriter(socket.getOutputStream());
-        signalIn = socket.getInputStream();
-        
+        signalIn = new BufferedReader(new InputStreamReader(socket.
+          getInputStream()));
+
         LOGGER.debug("signal-cli connected");
-        
-        int c;
-        while(( c = signalIn.read()) >= 0 )
+
+        String line;
+        while ((line = signalIn.readLine()) != null)
         {
-          System.out.write(c);
+          SignalCliResponse response = objectMapper.readValue(line, SignalCliResponse.class);
+          LOGGER.debug( "response={}", response.toString() );
         }
-        
+
         signalOut.close();
         signalIn.close();
         LOGGER.debug("signal-cli connection closed");
@@ -71,7 +75,7 @@ public class SignalCliConnection implements Runnable
       {
         signalIn = null;
         signalOut = null;
-        
+
         if (socket != null && socket.isConnected())
         {
           try
@@ -84,7 +88,7 @@ public class SignalCliConnection implements Runnable
           }
         }
       }
-      
+
       try
       {
         Thread.sleep(30000);
@@ -95,19 +99,23 @@ public class SignalCliConnection implements Runnable
       }
     }
   }
-  
-  private synchronized void synchronizedSend( String jsonRpcMessage )
+
+  private synchronized void synchronizedSend(String jsonRpcMessage)
   {
-    if ( signalOut != null )
+    if (signalOut != null)
     {
       signalOut.println(jsonRpcMessage);
       signalOut.flush();
     }
   }
   
+  private final ObjectMapper objectMapper = new ObjectMapper();
+
   private Thread monitor;
-  
+
   private Socket socket;
+
   private PrintWriter signalOut;
-  private InputStream signalIn;
+
+  private BufferedReader signalIn;
 }
