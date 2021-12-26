@@ -25,7 +25,7 @@ public class SignalFormParser
 
   public static String parse(SignalMessage message)
   {
-    LOGGER.debug("parse {} {}", message.getForm(), message.getMessage());
+    LOGGER.debug("parse {} {}", message.getTemplate(), message.getMessage());
     String text = message.getMessage();
     String parsedText = text;
 
@@ -41,11 +41,12 @@ public class SignalFormParser
       new Date(message.getTimestamp())));
     context.setVariable("message", message.getMessage());
     context.setVariable("clientname", message.getClientName());
+    context.setVariable("remoteaddr", message.getRemoteAddr());
 
     try
     {
-      File formFile = new File("forms" + File.separator + message.
-        getForm() + ".txt");
+      File formFile = new File("templates" + File.separator + message.
+        getTemplate() + ".txt");
 
       char[] buffer = new char[(int) formFile.length()];
       FileReader reader = new FileReader(formFile);

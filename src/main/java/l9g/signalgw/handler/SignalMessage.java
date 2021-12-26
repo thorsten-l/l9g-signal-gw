@@ -13,23 +13,25 @@ public class SignalMessage
   public SignalMessage(String receipient, boolean receipientIsGroup,
     String message)
   {
-    this(receipient, receipientIsGroup, message, "default");
+    this(receipient, receipientIsGroup, message, "default", "localhost");
   }
 
   public SignalMessage(String receipient, boolean receipientIsGroup,
-    String message, String clientName)
+    String message, String clientName, String remoteAddr)
   {
-    this(receipient, receipientIsGroup, message, clientName, "default");
+    this(receipient, receipientIsGroup, message, clientName, remoteAddr,
+      "default");
   }
 
   public SignalMessage(String receipient, boolean receipientIsGroup,
-    String message, String clientName, String form)
+    String message, String clientName, String remoteAddr, String template)
   {
     this.receipient = receipient;
     this.receipientIsGroup = receipientIsGroup;
     this.message = message;
     this.clientName = clientName;
-    this.form = form;
+    this.remoteAddr = remoteAddr;
+    this.template = template;
     this.timestamp = System.currentTimeMillis();
   }
 
@@ -40,7 +42,10 @@ public class SignalMessage
   private String clientName;
 
   @Getter
-  private String form;
+  private String remoteAddr;
+
+  @Getter
+  private String template;
 
   @Getter
   private String message;
