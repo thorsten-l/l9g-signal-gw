@@ -4,5 +4,4 @@ Remote Address: [[${remoteaddr}]][# th:if="${message}"]
 ----------------------------------
 [[${message}]][/]
 ----------------------------------[# th:each="entry : ${entries}"]
-[(${entry.key})] = [(${entry.value})]
-[/]
+[(${entry.key})] = [(${entry.value})][/]
