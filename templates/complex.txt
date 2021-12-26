@@ -1,0 +1,8 @@
+Date: [[${timestamp}]]
+Clientname: [[${clientname}]]
+Remote Address: [[${remoteaddr}]]
+----------------------------------
+[[${message}]]
+----------------------------------[# th:each="entry : ${entries}"]
+  - [(${entry.key})] = [(${entry.value})]
+[/]
