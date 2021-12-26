@@ -1,5 +1,8 @@
 package l9g.signalgw.handler;
 
+import java.util.AbstractMap.SimpleEntry;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -33,6 +36,7 @@ public class SignalMessage
     this.remoteAddr = remoteAddr;
     this.template = template;
     this.timestamp = System.currentTimeMillis();
+    this.keyValueList = new ArrayList<>();
   }
 
   @Getter
@@ -55,4 +59,7 @@ public class SignalMessage
 
   @Getter
   private boolean receipientIsGroup;
+
+  @Getter
+  private List<SimpleEntry<String, String>> keyValueList;
 }

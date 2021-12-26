@@ -1,6 +1,8 @@
 package l9g.signalgw.controller;
 
 import com.google.common.base.Strings;
+import java.util.AbstractMap;
+import java.util.Enumeration;
 import javax.servlet.http.HttpServletRequest;
 import l9g.signalgw.BuildProperties;
 import l9g.signalgw.Config;
@@ -24,7 +26,7 @@ public class TestController
     TestController.class.getName());
 
   @GetMapping(path = "/api/test", produces = MediaType.APPLICATION_JSON_VALUE)
-  public BuildProperties handleTest(HttpServletRequest request, 
+  public BuildProperties handleTest(HttpServletRequest request,
     @RequestParam(name = "c", required = false) String clientName,
     @RequestParam(name = "m", required = false) String messageText
   )
@@ -40,14 +42,28 @@ public class TestController
     String remoteHost = Strings.isNullOrEmpty(clientName)
       ? request.getRemoteHost()
       : clientName;
-    
+
     String text = Strings.isNullOrEmpty(messageText)
       ? "API test"
       : messageText;
-    
-    SignalHandler.getInstance().sendMessage(new SignalMessage(Config.
-      getInstance().getDefaultSignalReceipient(), true, 
-      text, remoteHost, remoteAddr ));
+
+    SignalMessage signalMessage = new SignalMessage(Config.
+      getInstance().getDefaultSignalReceipient(), true,
+      text, remoteHost, remoteAddr, "complex");
+
+    Enumeration<String> pnames = request.getParameterNames();
+
+    while( pnames.hasMoreElements() )
+    {
+      String pn = pnames.nextElement();
+      if ( !"c".equals(pn) && !"m".equals(pn) && !"t".equals(pn))
+      {
+        signalMessage.getKeyValueList().add(
+        new AbstractMap.SimpleEntry<>(pn, request.getParameter(pn)));
+      }
+    }
+
+    SignalHandler.getInstance().sendMessage(signalMessage);
 
     return BuildProperties.getInstance();
   }

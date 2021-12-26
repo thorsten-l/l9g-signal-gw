@@ -1,8 +1,9 @@
 package l9g.signalgw.controller;
 
 import com.google.common.base.Strings;
+import java.util.AbstractMap.SimpleEntry;
+import java.util.Enumeration;
 import javax.servlet.http.HttpServletRequest;
-import l9g.signalgw.BuildProperties;
 import l9g.signalgw.Config;
 import l9g.signalgw.handler.SignalHandler;
 import l9g.signalgw.handler.SignalMessage;
@@ -20,10 +21,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class SendController
 {
-  private final static Logger LOGGER = LoggerFactory.getLogger(SendController.class.getName());
+  private final static Logger LOGGER = LoggerFactory.getLogger(
+    SendController.class.getName());
 
   @GetMapping(path = "/api/send", produces = MediaType.TEXT_PLAIN_VALUE)
-  public String handleSendMessage(HttpServletRequest request, 
+  public String handleSendMessage(HttpServletRequest request,
     @RequestParam(name = "c", required = false) String clientName,
     @RequestParam(name = "m", required = false) String messageText,
     @RequestParam(name = "t", required = false) String messageTemplate
@@ -40,18 +42,32 @@ public class SendController
     String remoteHost = Strings.isNullOrEmpty(clientName)
       ? request.getRemoteHost()
       : clientName;
-    
+
     String text = Strings.isNullOrEmpty(messageText)
       ? ""
       : messageText;
-    
+
     String template = Strings.isNullOrEmpty(messageTemplate)
       ? "default"
       : messageTemplate;
-    
-    SignalHandler.getInstance().sendMessage(new SignalMessage(Config.
-      getInstance().getDefaultSignalReceipient(), true, 
-      text, remoteHost, remoteAddr, template ));
+
+    SignalMessage signalMessage = new SignalMessage(Config.
+      getInstance().getDefaultSignalReceipient(), true,
+      text, remoteHost, remoteAddr, template);
+
+    Enumeration<String> pnames = request.getParameterNames();
+
+    while (pnames.hasMoreElements())
+    {
+      String pn = pnames.nextElement();
+      if (!"c".equals(pn) && !"m".equals(pn) && !"t".equals(pn))
+      {
+        signalMessage.getKeyValueList().add(
+          new SimpleEntry<>(pn, request.getParameter(pn)));
+      }
+    }
+
+    SignalHandler.getInstance().sendMessage(signalMessage);
 
     return "OK";
   }
