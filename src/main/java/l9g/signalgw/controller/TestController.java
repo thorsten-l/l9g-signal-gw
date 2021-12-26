@@ -43,13 +43,9 @@ public class TestController
       ? request.getRemoteHost()
       : clientName;
 
-    String text = Strings.isNullOrEmpty(messageText)
-      ? "API test"
-      : messageText;
-
     SignalMessage signalMessage = new SignalMessage(Config.
       getInstance().getDefaultSignalReceipient(), true,
-      text, remoteHost, remoteAddr, "complex");
+      messageText, remoteHost, remoteAddr, "complex");
 
     Enumeration<String> pnames = request.getParameterNames();
 
