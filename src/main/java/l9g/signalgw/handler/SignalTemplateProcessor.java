@@ -15,17 +15,16 @@ import org.thymeleaf.templateresolver.StringTemplateResolver;
  *
  * @author Thorsten Ludewig (t.ludewig@gmail.com)
  */
-public class SignalFormParser
+public class SignalTemplateProcessor
 {
-  private final static Logger LOGGER = LoggerFactory.getLogger(
-    SignalFormParser.class.getName());
+  private final static Logger LOGGER = LoggerFactory.getLogger(SignalTemplateProcessor.class.getName());
 
   private final static SimpleDateFormat TIMESTAMP_FORMAT
     = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-  public static String parse(SignalMessage message)
+  public static String process(SignalMessage message)
   {
-    LOGGER.debug("parse {} {}", message.getTemplate(), message.getMessage());
+    LOGGER.debug("process {} {}", message.getTemplate(), message.getMessage());
     String text = message.getMessage();
     String parsedText = text;
 
@@ -42,6 +41,7 @@ public class SignalFormParser
     context.setVariable("message", message.getMessage());
     context.setVariable("clientname", message.getClientName());
     context.setVariable("remoteaddr", message.getRemoteAddr());
+    context.setVariable("entries", message.getKeyValueList());
 
     try
     {
