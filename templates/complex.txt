@@ -1,8 +1,8 @@
 Date: [[${timestamp}]]
 Clientname: [[${clientname}]]
-Remote Address: [[${remoteaddr}]]
+Remote Address: [[${remoteaddr}]][# th:if="${message}"]
 ----------------------------------
-[[${message}]]
+[[${message}]][/]
 ----------------------------------[# th:each="entry : ${entries}"]
-  - [(${entry.key})] = [(${entry.value})]
+[(${entry.key})] = [(${entry.value})]
 [/]
