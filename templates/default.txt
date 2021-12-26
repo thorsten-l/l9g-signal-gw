@@ -1,5 +1,5 @@
 Date: [[${timestamp}]]
 Clientname: [[${clientname}]]
 Remote Address: [[${remoteaddr}]]
-------------------------------------
+----------------------------------
 [[${message}]]
