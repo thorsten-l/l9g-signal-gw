@@ -54,13 +54,6 @@
       <groupId>org.thymeleaf.extras</groupId>
       <artifactId>thymeleaf-extras-springsecurity5</artifactId>
     </dependency>
-
-    <dependency>
-      <groupId>ognl</groupId>
-      <artifactId>ognl</artifactId>
-      <version>3.3.0</version> 
-    </dependency>
-
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
@@ -115,6 +108,12 @@
       <version>31.0.1-jre</version>
     </dependency>
     
+    <dependency>
+      <groupId>ognl</groupId>
+      <artifactId>ognl</artifactId>
+      <version>3.3.0</version> 
+    </dependency>
+
   </dependencies>
 
   <build>
