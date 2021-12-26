@@ -43,17 +43,13 @@ public class SendController
       ? request.getRemoteHost()
       : clientName;
 
-    String text = Strings.isNullOrEmpty(messageText)
-      ? ""
-      : messageText;
-
     String template = Strings.isNullOrEmpty(messageTemplate)
       ? "default"
       : messageTemplate;
 
     SignalMessage signalMessage = new SignalMessage(Config.
       getInstance().getDefaultSignalReceipient(), true,
-      text, remoteHost, remoteAddr, template);
+      messageText, remoteHost, remoteAddr, template);
 
     Enumeration<String> pnames = request.getParameterNames();
 
