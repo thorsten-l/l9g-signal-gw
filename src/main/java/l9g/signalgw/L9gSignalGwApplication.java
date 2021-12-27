@@ -91,12 +91,17 @@ public class L9gSignalGwApplication
       config.isDefaultSignalReceipientIsGroup()
     );
 
+    LOGGER.debug("*** Wait 15s ");
+
+    Thread.sleep(15000);
+
+    LOGGER.debug("*** Start Application ***");
+
     SignalCliConnection.start();
     SignalHandler.getInstance().sendMessage(new SignalMessage(config.
       getDefaultSignalReceipient(), config.isDefaultSignalReceipientIsGroup(),
       "L9G IoT Signal Gateway started."));
 
-    LOGGER.debug("*** Start Application ***");
 
     SpringApplication.run(L9gSignalGwApplication.class, args);
   }

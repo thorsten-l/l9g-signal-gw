@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+
+  signal-cli:
+    build: builder/signal-cli
+    container_name: signal-cli-daemon
+    command: daemon --tcp *:7583
+    restart: unless-stopped
+    ports:
+      - 7583:7583
+    volumes:
+      - ./data/signal-cli:/root/.local
+    environment:
+      - TZ=Europe/Berlin

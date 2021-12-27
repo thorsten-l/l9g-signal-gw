@@ -2,14 +2,26 @@ version: '3.8'
 
 services:
 
+  l9g-signal-gw:
+    image: bellsoft/liberica-openjdk-alpine:11
+    container_name: l9g-signal-gw
+    restart: unless-stopped
+    entrypoint: /l9g-signal-gw/entrypoint.sh
+    ports:
+      - 8080:8080
+    volumes:
+      - ./data/l9g-signal-gw:/l9g-signal-gw
+    environment:
+      - TZ=Europe/Berlin
+    depends_on:
+      - "signal-cli"
+     
   signal-cli:
     build: builder/signal-cli
     container_name: signal-cli-daemon
     command: daemon --tcp *:7583
-    restart: always
-    ports:
-      - 7583:7583
+    restart: unless-stopped
     volumes:
-      - ./data:/root/.local
+      - ./data/signal-cli:/root/.local
     environment:
       - TZ=Europe/Berlin
