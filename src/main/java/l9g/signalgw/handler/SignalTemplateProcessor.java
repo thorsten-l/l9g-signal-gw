@@ -56,6 +56,7 @@ public class SignalTemplateProcessor
       LOGGER.debug("length={}, buffer size={}", length, buffer.length);
 
       parsedText = templateEngine.process(new String(buffer), context);
+      parsedText = parsedText.replaceAll("&quot;", "\"");
     }
     catch (Exception ex)
     {
